@@ -12,24 +12,25 @@ module.exports = class Game {
     this.team1 = new Team("red", this.grid, this.gridSize, this.canvas);
     this.team2 = new Team("blue", this.grid, this.gridSize, this.canvas);
     this.grid.setup(this.team1, this.team2);
-    this.team1.placeTroops();
-    this.team2.placeTroops();
+    this.team1.placeTroops(16);
+    this.team2.placeTroops(16);
+    this.currentTeam = this.team1
   }
-  play() {
-    //Switch Sides
-    if (!!this.currentTeam) {
-      this.currentTeam = this.team1;
-    } else if (this.currentTeam == this.team1) {
-      this.currentTeam = this.team2;
-    } else {
-      this.currentTeam = this.team1;
+  async play() {
+    while(this.isPossibleToPlay(this.currentTeam)) {
+      if (this.canvas.wantsToPlay(this.currentTeam.color)) {
+         this.roll(this.canvas.askToPlay(this.currentTeam));
+      } else break
     }
-    if (this.isPossibleToPlay(this.currentTeam)) {
-      if (this.canvas.wantsToPlay(this.currentTeam)) {
-        this.roll(this.canvas.askToPlay(this.currentTeam));
+    this.currentTeam.placeTroops(5)
+    if (this.currentTeam.color == 'red') {
+        this.currentTeam = this.team2;
+      } else {
+        this.currentTeam = this.team1;
       }
-    }
+    console.log(this.grid.grid.map(row => row.map(box => box.team.color)))
   }
+
 neighboors(y,x) {
       let grid = this.grid.grid
       return [
@@ -59,12 +60,11 @@ neighboors(y,x) {
   }
   roll(invasion) {
       console.log(invasion)
-    let attackerSquare = this.grid.grid[invasion[0][1]][invasion[0][0]];
-    let defenderSquare = this.grid.grid[invasion[1][1]][invasion[1][0]];
+    let attackerSquare = this.grid.grid[invasion[0][0]][invasion[0][1]];
+    let defenderSquare = this.grid.grid[invasion[1][0]][invasion[1][1]];
     if (defenderSquare.count == 0 && attackerSquare.count > 1) {
       defenderSquare.team = attackerSquare.team;
-      attackerSquare.count--;
-      defenderSquare.count++;
+      this.currentTeam.invade(invasion)
       return;
     }
     while (attackerSquare.count > 1 && defenderSquare.count > 0) {
@@ -76,7 +76,6 @@ neighboors(y,x) {
         console.log('defender wins: '+attackerSquare.count + ' ' + defenderSquare.count)
       }
     }
-    console.log(this.grid.grid)
   }
   gameOver() {
     console.log("Game over!");

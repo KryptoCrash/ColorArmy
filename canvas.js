@@ -1,29 +1,26 @@
+var readlineSync = require('readline-sync');
 module.exports = class Canvas {
-    constructor(grid) {
-        this.i = 0
-        this.j = 0
-    }
-    placeTroop() {
-        if(this.i<16) {
-            this.i++
-            let o = 2;
-            o += Math.round(Math.random())
-            return [o,Math.round(Math.random()*3)]
-        } else {
-            this.i++
-            let o = 0;
-            o += Math.round(Math.random())
-            return [o,Math.round(Math.random()*3)]
-        }
-    }
-    wantsToPlay() {
-        return !!(Math.round(Math.random()))
-    }
-    askToPlay(team) {
-        this.j++
-        if(this.j==1) return team.play([[1,2],[2,1]])
-        if(this.j==2) return team.play([[2,2],[1,1]])
-        if(this.j==3) return team.play([[0,2],[0,1]])
-        if(this.j==4) return team.play([[3,2],[3,1]])
-    }
-}
+  constructor(grid) {
+    this.j = 0;
+    this.k = 0;
+    this.l = 0
+  }
+  
+  placeTroop(team) {
+      return (readlineSync.question('test')).split(',').map(Number)
+  }
+  wantsToPlay(color) {
+    let x = readlineSync.question(`Does ${color} team want to keep attacking?`)
+    return x == 'yes' ? true : false
+  }
+  askToPlay(team) {
+    console.log(team.grid)
+    let invasion = []
+    invasion.push(readlineSync.question(`Which ${team.color} box do you want to attack from?`).split(',').map(Number))
+    invasion.push(readlineSync.question(`Which box do you want to attack?`).split(',').map(Number))
+    return invasion
+  }
+  invade(invasion) {
+      return Number(readlineSync.question(`How many troops do you want to use to invade ${invasion[1].join()}`))
+  }
+};
