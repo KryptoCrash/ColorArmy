@@ -1,5 +1,5 @@
-import Box from './box.js';
-export default class Grid {
+var Box = require('./box.js')
+module.exports = class Grid {
   constructor(gridSize) {
     this.gridSize = gridSize
     this.grid = []

@@ -1,4 +1,4 @@
-export default class Box {
+module.exports = class Box {
   constructor() {
     this.team;
     this.count = 0;

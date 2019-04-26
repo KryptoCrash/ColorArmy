@@ -18,7 +18,7 @@ module.exports = class Canvas {
     let invasion = []
     invasion.push(readlineSync.question(`Which ${team.color} box do you want to attack from?`).split(',').map(Number))
     invasion.push(readlineSync.question(`Which box do you want to attack?`).split(',').map(Number))
-    return invasion
+    return team.play(invasion)
   }
   invade(invasion) {
       return Number(readlineSync.question(`How many troops do you want to use to invade ${invasion[1].join()}`))

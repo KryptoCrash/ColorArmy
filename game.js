@@ -1,7 +1,7 @@
-import Grid from "./grid.js";
-import Team from "./team.js";
-import Canvas from "./canvas.js";
-export default class Game {
+var Grid = require('./grid.js')
+var Team = require('./team.js')
+var Canvas = require('./canvas.js')
+module.exports = class Game {
   constructor(gridSize) {
     this.gridSize = gridSize;
     this.currentTeam;

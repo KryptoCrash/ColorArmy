@@ -1,4 +1,4 @@
-import Game from './game.js';
+var Game = require('./game.js')
 function startGame(gridSize) {
   var game = new Game(gridSize);
   game.setup();
