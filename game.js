@@ -1,7 +1,7 @@
-var Grid = require("./grid.js");
-var Team = require("./team.js");
-var Canvas = require("./canvas.js");
-module.exports = class Game {
+import Grid from "./grid.js";
+import Team from "./team.js";
+import Canvas from "./canvas.js";
+export default class Game {
   constructor(gridSize) {
     this.gridSize = gridSize;
     this.currentTeam;
@@ -32,8 +32,8 @@ module.exports = class Game {
   }
 
 neighboors(y,x) {
-      let grid = this.grid.grid
-      return [
+  let grid = this.grid.grid
+    return [
           grid[y-1][x-1],
           grid[y-1][x],
           grid[y-1][x+1],

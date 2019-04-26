@@ -1,4 +1,4 @@
-module.exports = class Team {
+export default class Team {
   constructor(color, grid, gridSize, canvas) {
     this.color = color;
     this.grid = grid.grid;
